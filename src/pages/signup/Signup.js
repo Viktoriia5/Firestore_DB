@@ -17,9 +17,9 @@ export default function Signup() {
   };
   return (
     <form onSubmit={handleSubmit} className={styles["signup-form"]}>
-      <h2>Signup</h2>
+      <h2>Реєстрація</h2>
       <label>
-        <span>email: </span>
+        <span>Електронна адреса: </span>
         <input
           type="email"
           onChange={(e) => setEmail(e.target.value)}
@@ -28,7 +28,7 @@ export default function Signup() {
       </label>
 
       <label>
-        <span>password: </span>
+        <span>Пароль: </span>
         <input
           type="password"
           onChange={(e) => setPassword(e.target.value)}
@@ -44,7 +44,7 @@ export default function Signup() {
           value={displayName}
         ></input>
       </label>
-      {!isPending && <button className="btn">Signup</button>}
+      {!isPending && <button className="btn">Зареєструватися</button>}
       {isPending && (
         <button className="btn" disabled>
           завантаження

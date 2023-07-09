@@ -19,7 +19,7 @@ export default function Navbar() {
     <div className="navbar" style={{ background: color }}>
       <nav>
         <Link to="/" className="brand">
-          <h1>Фонди музею Гоголя</h1>
+          <h1>Фонди </h1>
         </Link>
         <Searchbar />
         {!user && (
@@ -27,9 +27,9 @@ export default function Navbar() {
             <Link to="/login" className="login">
               Вхід
             </Link>
-            <Link to="/signup" className="logout">
+            {/* <Link to="/signup" className="logout">
               Реєстрація
-            </Link>
+            </Link> */}
           </>
         )}
 

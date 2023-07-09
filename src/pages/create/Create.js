@@ -8,7 +8,9 @@ import "./Create.css";
 export default function Create() {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
+  const [authorFirstName, setAuthorFirstName] = useState("");
   const [receiptYear, setReceiptYear] = useState("");
+  const [receiptDate, setReceiptDate] = useState("");
   const [saveState, setSaveState] = useState("");
   const [description, setDescription] = useState("");
   const [inventoryNumber, setInventoryNumber] = useState("");
@@ -28,7 +30,9 @@ export default function Create() {
     const doc = {
       title,
       author,
+      authorFirstName,
       receiptYear,
+      receiptDate,
       saveState,
       description,
       material,
@@ -75,13 +79,22 @@ export default function Create() {
           ></input>
         </label>
 
-        {/* АВТОР */}
+        {/* АВТОР Прізвище */}
         <label>
-          <span>Автор</span>
+          <span>Прізвище автора</span>
           <input
             type="text"
             onChange={(e) => setAuthor(e.target.value)}
             value={author}
+          ></input>
+        </label>
+        {/* АВТОР ім’я */}
+        <label>
+          <span>Ім’я, по-батькові автора</span>
+          <input
+            type="text"
+            onChange={(e) => setAuthorFirstName(e.target.value)}
+            value={authorFirstName}
           ></input>
         </label>
 
@@ -92,6 +105,15 @@ export default function Create() {
             type="text"
             onChange={(e) => setReceiptYear(e.target.value)}
             value={receiptYear}
+          ></input>
+        </label>
+        {/* ДАТА НАДХОДЖЕННЯ */}
+        <label>
+          <span>Дата надходження</span>
+          <input
+            type="text"
+            onChange={(e) => setReceiptDate(e.target.value)}
+            value={receiptDate}
           ></input>
         </label>
 

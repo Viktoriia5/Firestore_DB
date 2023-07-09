@@ -32,9 +32,9 @@ export default function Recipe() {
     return () => unsub();
   }, [id]);
 
-  const handleClick = () => {
-    projectFirestore.collection("Речі").doc(id).update({});
-  };
+  // const handleClick = () => {
+  //   projectFirestore.collection("Речі").doc(id).update({});
+  // };
   return (
     <div className={`recipe ${mode}`}>
       {error && <p className="error">{error}</p>}
@@ -42,8 +42,9 @@ export default function Recipe() {
       {recipe && (
         <>
           <h2 className="page-title">{recipe.title}</h2>
-          <p>Автор: {recipe.author}</p>
-          <p>Рік надходження: {recipe.receiptYear}</p>
+          <p>Автор: {recipe.author}</p> <span>{recipe.authorFirstName}</span>
+          <p>Рік надходження: {recipe.receiptYear}</p>{" "}
+          <span>{recipe.receiptDate}</span>
           <p>Стан збереження: {recipe.saveState}</p>
           <p>Опис предмета: {recipe.description}</p>
           <ul>
@@ -57,7 +58,7 @@ export default function Recipe() {
           <p>Джерело надходження: {recipe.incomeSource}</p>
           <p>Нотатка: {recipe.note}</p>
           <p className="method">{recipe.опис}</p>
-          <button onClick={handleClick}>Редагувати</button>
+          {/* <button onClick={handleClick}>Редагувати</button> */}
         </>
       )}
     </div>

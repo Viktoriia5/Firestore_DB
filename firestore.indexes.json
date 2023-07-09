@@ -1,0 +1,23 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "%D0%A0%D0%B5%D1%87%D1%96",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "titleLowercase",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "authorLowercase",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "descriptionLowercase",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

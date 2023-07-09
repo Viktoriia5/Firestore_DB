@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import firebase from "firebase/app";
 import "firebase/firestore";
@@ -14,36 +14,63 @@ export default function Search() {
   const queryParams = new URLSearchParams(queryString);
   const query = queryParams.get("q");
 
-  const [recipes, setRecipes] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
+  const db = firebase.firestore();
+
+  // useEffect(() => {
+  //   // Create a Firestore query that searches for documents that match the keyword
+  //   db.collection("Речі")
+  //     .where("title", "==", query)
+  //     .where("author", "==", query)
+  //     .where("receiptYear", "==", query)
+  //     .get()
+  //     .then((querySnapshot) => {
+  //       const results = [];
+  //       querySnapshot.forEach((doc) => {
+  //         results.push({ ...doc.data(), id: doc.id });
+  //         console.log(results);
+  //       });
+  //       console.log("TTTTTTTTTTTTT");
+  //       console.log(querySnapshot);
+  //       setSearchResults(results);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error searching for recipes:", error);
+  //     });
+  // }, [query]);
 
   useEffect(() => {
-    const db = firebase.firestore();
-    const recipesRef = db
-      .collection("Речі")
-      .where("keywords", "array-contains", query);
+    // Create a Firestore query that searches for documents that match the keyword
+    const titleQuery = db.collection("Речі").where("title", "==", query);
 
-    setLoading(true);
-    recipesRef
-      .get()
-      .then((querySnapshot) => {
-        const data = querySnapshot.docs.map((doc) => doc.data());
-        setRecipes(data);
-        setLoading(false);
+    const authorQuery = db.collection("Речі").where("author", "==", query);
+
+    const receiptYearQuery = db
+      .collection("Речі")
+      .where("receiptYear", "==", query);
+
+    Promise.all([titleQuery.get(), authorQuery.get(), receiptYearQuery.get()])
+      .then((querySnapshots) => {
+        const results = [];
+        querySnapshots.forEach((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            results.push({ ...doc.data(), id: doc.id });
+          });
+        });
+        setSearchResults(results);
       })
       .catch((error) => {
-        setError(error.message);
-        setLoading(false);
+        console.error("Error searching for recipes:", error);
       });
   }, [query]);
 
   return (
     <div>
-      <h2 className="page-title">Recipes including "{query}"</h2>
-      {error && <p className="error">{error}</p>}
-      {loading && <p className="loading">Loading...</p>}
-      {!loading && <RecipeList recipes={recipes} />}
+      <h2 className="page-title">Предмети, що містять "{query}"</h2>
+      {searchResults.length === 0 && (
+        <p className="no-results">No recipes found.</p>
+      )}
+      {searchResults.length > 0 && <RecipeList recipes={searchResults} />}
     </div>
   );
 }

@@ -8,6 +8,9 @@ import Trashcan from "../assets/trashcan.svg";
 
 export default function RecipeList({ recipes }) {
   const { mode } = useTheme();
+  console.log("This is RecipeLIst component!!!");
+  console.log(...recipes);
+
   if (recipes.length === 0) {
     return (
       <div className="error">Немає одиниць, що відповідають запиту...</div>
@@ -17,16 +20,17 @@ export default function RecipeList({ recipes }) {
   const handleClick = (id) => {
     projectFirestore.collection("Речі").doc(id).delete();
   };
+
   return (
     <div className="recipe-list">
       {recipes.map((recipe) => (
-        <div key={recipe.id} className={`card ${mode}`}>
+        <div key={recipe.id} recipe={recipe} className={`card ${mode}`}>
           <h3>{recipe.title}</h3>
           <p>{recipe.author}</p>
           <p>{recipe.receiptYear}</p>
           {/* <p>{recipe.description}</p> */}
           <div>
-            {recipe.description && recipe.description.substring(0, 80)}...
+            {recipe.description && recipe.description.substring(0, 250)}...
           </div>
           <p>{recipe.material}</p>
           <p>{recipe.storageLocation}</p>
@@ -35,6 +39,7 @@ export default function RecipeList({ recipes }) {
           <img
             className="delete"
             src={Trashcan}
+            alt="trashcan icon"
             onClick={() => handleClick(recipe.id)}
           ></img>
         </div>
